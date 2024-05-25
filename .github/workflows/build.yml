@@ -1,0 +1,53 @@
+name: sccache demo
+
+on: [push]
+
+env:
+    SCCACHE_GHA_ENABLED: "true"
+
+defaults:
+    run:
+        shell: bash
+
+jobs:
+    Build:
+        strategy:
+            matrix:
+                os: [windows-latest, macos-latest]
+                include:
+                    - os: windows-latest
+                      package-manager: choco
+                    - os: macos-latest
+                      package-manager: brew
+
+        name: Build on ${{ matrix.os }}
+        runs-on: ${{ matrix.os }}
+
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  submodules: recursive
+
+            - name: Run sccache-cache
+              uses: mozilla-actions/sccache-action@v0.0.3
+
+            - name: Run sccache stat for check
+              shell: bash
+              run: ${SCCACHE_PATH} --show-stats
+
+            - name: Install Ninja
+              run: ${{ matrix.package-manager }} install ninja
+
+            - name: Configure using mainline JUCE
+              run: |
+                  cmake -Bbuild -GNinja
+
+            - name: Apply JUCE diff
+              run: |
+                  cd JUCE
+                  git apply ../juce.diff
+
+            - name: Configure using modified JUCE
+              run: |
+                  rm -rf build
+                  cmake -Bbuild -GNinja
