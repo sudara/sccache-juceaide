@@ -32,9 +32,9 @@ jobs:
             - name: Run sccache-cache
               uses: mozilla-actions/sccache-action@v0.0.4
 
-            - name: Set up Clang
-              if: ${{ runner.os != 'macOS' }}
-              uses: egor-tensin/setup-clang@v1
+            # https://github.com/actions/runner-images/issues/1621
+            - name: Use Visual Studio, not MingW
+              uses: microsoft/setup-msbuild@v2
 
             - name: Install Ninja
               run: ${{ matrix.package-manager }} install ninja
