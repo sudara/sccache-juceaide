@@ -34,6 +34,7 @@ jobs:
 
             # https://github.com/actions/runner-images/issues/1621
             - name: Use Visual Studio, not MingW
+              if: runner.os == Windows
               uses: microsoft/setup-msbuild@v2
 
             - name: Install Ninja
