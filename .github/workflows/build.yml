@@ -31,10 +31,6 @@ jobs:
             - name: Run sccache-cache
               uses: mozilla-actions/sccache-action@v0.0.3
 
-            - name: Run sccache stat for check
-              shell: bash
-              run: ${SCCACHE_PATH} --show-stats
-
             - name: Install Ninja
               run: ${{ matrix.package-manager }} install ninja
 
@@ -42,6 +38,10 @@ jobs:
               run: |
                   cmake -Bbuild -GNinja
 
+            - name: Run sccache stat for check
+              shell: bash
+              run: ${SCCACHE_PATH} --show-stats
+              
             - name: Apply JUCE diff
               run: |
                   cd JUCE
