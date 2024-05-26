@@ -28,8 +28,13 @@ jobs:
               with:
                   submodules: recursive
 
+
             - name: Run sccache-cache
-              uses: mozilla-actions/sccache-action@v0.0.3
+              uses: mozilla-actions/sccache-action@v0.0.4
+
+            - name: Set up Clang
+              if: ${{ runner.os != 'macOS' }}
+              uses: egor-tensin/setup-clang@v1
 
             - name: Install Ninja
               run: ${{ matrix.package-manager }} install ninja
