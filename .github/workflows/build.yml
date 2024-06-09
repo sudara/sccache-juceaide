@@ -53,6 +53,7 @@ jobs:
                   cd JUCE
                   git apply ../juce.diff
                   rm -rf build
+                  rm -rf build\JUCE\tools\extras\Build\juceaide\CMakeFiles
 
             - name: Configure using modified JUCE
               run: |
