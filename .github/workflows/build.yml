@@ -42,7 +42,7 @@ jobs:
 
             - name: Configure using mainline JUCE
               run: |
-                  cmake -Bbuild -GNinja
+                  cmake -Bbuild -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
 
             - name: Run sccache stat for check
               shell: bash
@@ -56,4 +56,4 @@ jobs:
             - name: Configure using modified JUCE
               run: |
                   rm -rf build
-                  cmake -Bbuild -GNinja
+                  cmake -Bbuild -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
