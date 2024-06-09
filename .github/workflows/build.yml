@@ -52,8 +52,8 @@ jobs:
               run: |
                   cd JUCE
                   git apply ../juce.diff
+                  rm -rf build
 
             - name: Configure using modified JUCE
               run: |
-                  rm -rf build
                   cmake -Bbuild -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
